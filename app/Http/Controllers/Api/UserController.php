@@ -12,7 +12,6 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // Melindungi semua metode di controller ini dengan middleware auth
         $this->middleware('auth:api');
     }
     
@@ -26,17 +25,22 @@ class UserController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            return response()->json($user, 200);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'User not found'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Something went wrong!'], 500);
-        }
+    public function getUserById($id)
+{
+    try {
+        // Fetch user by ID
+        $user = User::findOrFail($id);
+        // Return the user data as JSON response
+        return response()->json($user, 200); // Use $user instead of $users
+    } catch (ModelNotFoundException $e) {
+        // Handle case when user is not found
+        return response()->json(['error' => 'User not found'], 404);
+    } catch (\Exception $e) {
+        // Handle any other exception
+        return response()->json(['error' => 'Something went wrong!'], 500);
     }
+}
+
 
     public function store(Request $request)
     {
