@@ -5,5 +5,6 @@ aptPkgs = ['git', 'unzip']
 [phases.install]
 cmds = ['composer install --no-dev']
 
+
 [start]
 cmd = "php artisan serve --host=0.0.0.0 --port=$PORT" 
